@@ -1,0 +1,110 @@
+// // Assignment Code
+// var generateBtn = document.querySelector("#generate");
+
+// // Write password to the #password input
+// function writePassword() {
+//   var password = generatePassword();
+//   var passwordText = document.querySelector("#password");
+
+//   passwordText.value = password;
+
+// }
+
+// // Add event listener to generate button
+// generateBtn.addEventListener("click", writePassword);
+
+//Assignment Code(created generateBtn that when generate from html is clicked through js an event listener called click will then perform the writePassword function on line 20)
+const generateBtn = document.querySelector("#generate").addEventListener("click",writePassword);
+
+//  Write password to the #password input
+function writePassword() {
+   var password = generatePassword();
+   var passwordText = document.querySelector("#password");
+
+   passwordText.value = password;
+
+ }
+
+
+// Instructions to create a password
+alert("Weclome, you will be asked a couple questions to help create your password based on your qualifications.");
+
+// variable Arrays
+const upperCase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
+const lowerCase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+const special = ["!", "%", "&", ",", "*", "+", "-", ".", "/", "<", ">", "?","~"];
+
+// function to prompt the confirmed length of desired password 
+function generatePassword() {
+  let passwordLength = prompt("Desired length of password?(8-50 characters long)");
+  for (passwordLength; passwordLength < 8 || passwordLength > 50; count ++){
+    //  if entered character amount less than 8 and more than 50 then user must try again
+    if (passwordLength < 8 || passwordLength > 50){
+     alert("Password length must be between 8-50 characters, try again");
+   }
+  }
+  // alert to show how many characters the user chose
+  alert("Your password will have " + passwordLength + " characters");
+
+  //user password qualifications
+  const confirmUpperCase = confirm("Click OK to confirm upper case letters in your password.");
+
+  const confirmLowerCase = confirm("Click OK to confirm lower case letters in your password.");
+
+  const confirmNumbers = confirm("Click OK to confirm numbers in your password.");
+  
+  const confirmSpecial = confirm("Click OK to confirm special characters in your password.");
+
+  //created a variable that contains all answers user chose for a for loop that asks all questions again if no qualifications were picked for password.
+  const allConfirms =(confirmUpperCase, confirmLowerCase, confirmNumbers,confirmSpecial);
+
+// for loop to check if all answers were false and if so all qualifiction will be asked again.
+  for (allConfirms; confirmUpperCase === false && confirmLowerCase === false && confirmNumbers === false && confirmSpecial === false;) {
+    alert("You must choose at least one qualification for your password.");
+
+    // this section re-asks the qualifications for user to pick until atleast one is chosen.
+    const confirmUpperCase = confirm("Click OK to confirm upper case letters in your password.");
+
+    const confirmLowerCase = confirm("Click OK to confirm lower case letters in your password.");
+  
+    const confirmNumbers = confirm("Click OK to confirm numbers in your password.");
+    
+    const confirmSpecial = confirm("Click OK to confirm special characters in your password.");
+  }
+  // passCharacters is the variable that is created while choosing which password qualifications were chosen.
+  let passCharacters = [];
+
+     // based on confirms above  the below code will check if ok or cancel was clicked and if boolean was true than it will use the array options.
+    if (confirmUpperCase) {
+      passCharacters = passCharacters.concat(upperCase)
+    }
+               
+    if (confirmLowerCase) {
+      passCharacters = passCharacters.concat(lowerCase)
+    }
+                
+    if (confirmNumbers) {
+      passCharacters = passCharacters.concat(numbers)
+    }
+
+    if (confirmSpecial) {
+      passCharacters = passCharacters.concat(special)
+    }
+// console.log to log array based on boolean one by one.
+  console.log(passCharacters);
+
+  // after qualifications are chosen and array options are attached to boolean qualifications, the randomGeneratedPass will result as the variable name for the created password
+  let randomGeneratedPass = ""
+
+ // for loop that creates a variable which has to be less than the password length in order to genereate the exact characters the user picked for their password through the boolean qualifications asked.
+ for (let i = 0; i < passwordLength; i++) {
+  randomGeneratedPass = randomGeneratedPass + passCharacters[Math.floor(Math.random() * passCharacters.length)];
+  console.log(randomGeneratedPass)
+}
+// shows the password generated by user
+return randomGeneratedPass;    
+}
